@@ -109,10 +109,85 @@ var timeBack = function(zmena, n07, n99) {
   }
 };
 
+var drawLegend = function(retezec) {
+  $(".legend").empty()
+  var w = 200;
+    var h = 100;
+    var svg = d3.select('.legend')
+          .append("svg")
+          .attr("width", w)
+          .attr("height", h + 25);
+
+  if (retezec == "any") {
+    var nazvy = [];
+    for (var nazev in colors) {
+        nazvy.push(nazev);
+    }
+
+     svg.selectAll("circle")
+         .data(nazvy)
+         .enter()
+         .append("circle")
+          .attr("cx", 15)
+          .attr("cy", function(d, i) {
+            return (i * 20) + 15;
+          })
+          .attr("r", 6)
+          .style("fill", function(d, i) {
+            return colors[d];
+          })
+
+    svg.selectAll("text")
+         .data(nazvy)
+         .enter()
+         .append("text")
+         .text(function (d) {
+          return d;
+         })
+          .attr("x", 25)
+          .attr("y", function(d, i) {
+            return (i * 20) + 19;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("fill", "black");
+    //lekarny
+  } else {
+    var cols = ["#d7191c", "#2c7bb6"]
+    var dataset = ["Změnila majitele", "Původní majitel"]
+    
+    svg.selectAll("circle")
+         .data(dataset)
+         .enter()
+         .append("circle")
+          .attr("cx", 15)
+          .attr("cy", function(d, i) {
+            return (i * 20) + 15;
+          })
+          .attr("r", 6)
+          .style("fill", function(d, i) {
+            return cols[i];
+          })
+
+    svg.selectAll("text")
+         .data(dataset)
+         .enter()
+         .append("text")
+         .text(function (d) {
+          return d;
+         })
+          .attr("x", 25)
+          .attr("y", function(d, i) {
+            return (i * 20) + 19;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("fill", "black");
+  };
+};
 
 var drawMap = function(retezec) {
 	$("#map").empty()
-	$("#chart").empty()
 	map = new mapboxgl.Map({
 	  container: 'map',
 	  center: [14.46562, 50.05981],
@@ -135,7 +210,9 @@ var drawMap = function(retezec) {
 };
 
 drawMap("any");
+drawLegend("any");
 
 $(".selector").change(function(evt) {
     drawMap(evt.target.value)
+    drawLegend(evt.target.value)
 });
