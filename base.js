@@ -9,6 +9,12 @@ var style = function (retezec) {
       "interactive": true,
       "type": "raster",
       "source": "back"
+     },
+     {
+      "id": "mistopis",
+      "interactive": true,
+      "type": "raster",
+      "source": "mistopis"
      }];
 
   if (retezec == "any") {
@@ -66,14 +72,7 @@ var style = function (retezec) {
     }
     })
   };
-
-  stls.push( {
-      "id": "mistopis",
-      "interactive": true,
-      "type": "raster",
-      "source": "mistopis"
-     });
-
+  
   var style = {}
   style.version = 8;
   style.sources = {}
@@ -161,7 +160,7 @@ var drawLegend = function(retezec) {
       .style("height", "140px")
 
     var cols = ["#d7191c", "#2c7bb6"]
-    var dataset = ["Změnila majitele", "Původní majitel"]
+    var dataset = ["Převzatá", "Nově založená"]
     
     svg.selectAll("circle")
          .data(dataset)
