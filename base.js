@@ -1,6 +1,78 @@
 var map;
 
+var colors = {"nezávislá": "#999999", "Agel": "#80b1d3", "BENU": "#b3de69", "Devětsil JST": "#bebada", "Plzeňská lékárna": "#fdb462", "Dr.Max": "#fb8072"};
+
 var style = function (retezec) {
+
+  var stls = [{
+      "id": "back",
+      "interactive": true,
+      "type": "raster",
+      "source": "back"
+     }];
+
+  if (retezec == "any") {
+    for (var retezec in colors) {
+      stls.push({
+      "id": retezec,
+      "interactive": true,
+      "type": "circle",
+      "source": "lekarny",
+      "source-layer": "lekarny",
+      "filter": [
+        "all",
+        ["==", "znacka_2015", retezec],
+        ],
+      "paint": {
+        "circle-color": colors[retezec],
+        "circle-radius": 4,
+        "circle-opacity": 0.8
+    }
+    });
+    }
+  } else {
+     stls.push({
+      "id": retezec + "_zmen",
+      "interactive": true,
+      "type": "circle",
+      "source": "lekarny",
+      "source-layer": "lekarny",
+      "filter": [
+        "all",
+        ["==", "znacka_2015", retezec],
+        ["==", "zmena", "n"]
+        ],
+      "paint": {
+        "circle-color": "#2c7bb6",
+        "circle-radius": 4,
+        "circle-opacity": 0.8
+    }
+    })
+     stls.push({
+      "id": retezec,
+      "interactive": true,
+      "type": "circle",
+      "source": "lekarny",
+      "source-layer": "lekarny",
+      "filter": [
+        "all",
+        ["==", "znacka_2015", retezec],
+        ["==", "zmena", "y"]
+        ],
+      "paint": {
+        "circle-color": "#d7191c",
+        "circle-radius": 4,
+        "circle-opacity": 0.8
+    }
+    })
+  };
+
+  stls.push( {
+      "id": "mistopis",
+      "interactive": true,
+      "type": "raster",
+      "source": "mistopis"
+     });
 
   var style = {}
   style.version = 8;
@@ -11,119 +83,17 @@ var style = function (retezec) {
       "maxzoom": 13
 
     };
-    style.layers = [
-    {
-      "id": "nezavisle",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "visibility": (retezec == "nezavisle" || retezec == "any" ? "visible": "none"),
-      "source-layer": "lekarny",
-      "filter": [
-        "all",
-        ["!in", "znacka_2015", "Agel", "BENU", "Devětsil JST", "Dr.Max", "Plzeňská lékárna"],
-        ],
-      "paint": {
-        "circle-color": "#999999",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    },
-    {
-      "id": "agel",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "source-layer": "lekarny",
-      "visibility": (retezec == "Agel" || retezec == "any" ? "visible": "none"),
-      "filter": [
-        "all",
-        ["==", "znacka_2015", "Agel"],
-        ],
-      "paint": {
-        "circle-color": "#80b1d3",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    },
-    {
-      "id": "benu",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "source-layer": "lekarny",
-      "visibility": (retezec == "BENU" || retezec == "any" ? "visible": "none"),
-      "filter": [
-        "all",
-        ["==", "znacka_2015", "BENU"],
-        ],
-      "paint": {
-        "circle-color": "#b3de69",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    },
-    {
-      "id": "devetsil",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "source-layer": "lekarny",
-      "filter": [
-        "all",
-        ["==", "znacka_2015", "Devětsil JST"],
-        ],
-    	"visibility": (retezec == "Devětsil JST" || retezec == "any" ? "visible": "none"),
-      "paint": {
-        "circle-color": "#bebada",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    },
-    {
-      "id": "plzenska",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "source-layer": "lekarny",
-      "visibility": (retezec == "Plzeňská lékárna" || retezec == "any" ? "visible": "none"),
-      "filter": [
-        "all",
-        ["==", "znacka_2015", "Plzeňská lékárna"],
-        ],
-      "paint": {
-        "circle-color": "#fdb462",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    },
-    {
-      "id": "drmax",
-      "interactive": true,
-      "type": "circle",
-      "source": "lekarny",
-      "source-layer": "lekarny",
-      "visibility": (retezec == "Dr.Max" || retezec == "any" ? "visible": "none"),
-      "filter": [
-        "all",
-        ["==", "znacka_2015", "Dr.Max"],
-        ],
-      "paint": {
-        "circle-color": "#fb8072",
-        "circle-radius": 4,
-        //"fill-outline-color": "#d9d9d9",
-        "circle-opacity": 0.8
-    }
-    }
-    ];
-    style.layers =  style.layers.filter(function (s){
-      return s.visibility !== "none"
-    });
+    style.sources.back = {
+      "type": "raster",
+      "tiles": ["https://samizdat.cz/tiles/ton_b1/{z}/{x}/{y}.png"],
+      "tileSize": 256
+   };
+   style.sources.mistopis = {
+      "type": "raster",
+      "tiles": ["https://samizdat.cz/tiles/ton_l1/{z}/{x}/{y}.png"],
+      "tileSize": 256
+   };
+    style.layers = stls;
     return style
 };
 
@@ -146,7 +116,7 @@ var drawMap = function(retezec) {
 	map = new mapboxgl.Map({
 	  container: 'map',
 	  center: [14.46562, 50.05981],
-	  zoom: 7,
+	  zoom: 6,
 	  style: style(retezec)
 	});
 
@@ -157,7 +127,9 @@ var drawMap = function(retezec) {
 	    map.featuresAt(e.point, {radius: 5}, function(err, features) {
 	        if (err) throw err;
 	        $(".info").empty()
-	        $(".info").append("<b>" + features[0].properties.nazev_2015 + "</b><br>Adresa: <b>" + features[0].properties.adresa + "</b><br>" + timeBack(features[0].properties.zmena, features[0].properties.nazev_2007, features[0].properties.nazev_1999))
+          if (features[0]) {
+            $(".info").append("<b>" + features[0].properties.nazev_2015 + "</b><br>Adresa: <b>" + features[0].properties.adresa + "</b><br>" + timeBack(features[0].properties.zmena, features[0].properties.nazev_2007, features[0].properties.nazev_1999))
+          }
 	    });
 	});
 };
