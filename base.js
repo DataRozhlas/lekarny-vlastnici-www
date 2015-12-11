@@ -9,7 +9,7 @@ var style = function (retezec) {
       "type": "vector",
       "tiles": [location.origin+location.pathname+"./tiles/{z}/{x}/{y}.pbf"],
       "maxzoom": 13
-      
+
     };
     style.layers = [
     {
@@ -58,8 +58,8 @@ var style = function (retezec) {
         "all",
         ["==", "znacka_2015", "Devětsil JST"],
         ],
+    	"visibility": (retezec == "Devětsil JST" || retezec == "any" ? "visible": "none"),
       "paint": {
-      	"visibility": (retezec == "Devětsil JST" || retezec == "any" ? "visible": "none"),
         "circle-color": "#bebada",
         "circle-radius": 3,
         //"fill-outline-color": "#d9d9d9",
@@ -121,8 +121,11 @@ var style = function (retezec) {
     }
     }
     ];
-    console.log(style)
-    return style;
+    style.layers =  style.layers.filter(function (s){
+      return s.visibility !== "none"
+    });
+    console.log(style.layers);
+    return style
 };
 
 
@@ -135,8 +138,6 @@ var drawMap = function(retezec) {
 	  zoom: 7,
 	  style: style(retezec)
 	});
-
-	console.log(style(retezec))
 
 	map.dragRotate.disable();
 	//map.addControl(new mapboxgl.Navigation());
