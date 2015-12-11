@@ -1,6 +1,6 @@
 var map;
 
-var colors = {"nezávislá": "#999999", "Agel": "#80b1d3", "BENU": "#b3de69", "Devětsil JST": "#bebada", "Plzeňská lékárna": "#fdb462", "Dr.Max": "#fb8072"};
+var colors = {"nezávislá": "#d9d9d9", "Agel": "#80b1d3", "BENU": "#b3de69", "Devětsil JST": "#dd3497", "Plzeňská lékárna": "#fdb462", "Dr.Max": "#fb8072"};
 
 var style = function (retezec) {
 
