@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://samizdat.cz/tools/jquery/2.1.1.min.js"></script>
+    <script src="https://samizdat.cz/tools/leaflet/0.7.3.js"></script>
+    <script src="https://samizdat.cz/tools/d3/3.5.3.js"></script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        #tooltip { background-color: red; position:absolute; top:30px; right: 30px; width:230px; height: 200px}
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<div id='tooltip'>
+    <select class="selector">
+        <option value="any">Všechny lékárny</option>
+        <option value="Agel">Agel</option>
+        <option value="BENU">BENU</option>
+        <option value="Devětsil JST">Devětsil JST</option>
+        <option value="Dr.Max">Dr.Max</option>
+        <option value="Plzeňská lékárna">Plzeňská lékárna</option>
+        <option value="nezavisle">nezávislé lékárny</option>
+    </select>
+    
+    <p class='info'></p>
+</div>
+<script src='./base.js'></script>
+
+</body>
+</html>

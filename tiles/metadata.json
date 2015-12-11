@@ -1,0 +1,8 @@
+{
+    "format": "pbf",
+    "json": "{\"vector_layers\":[{\"id\":\"lekarny\",\"description\":\"lekarny\",\"fields\":{\"adresa\":\"String\",\"nazev_1999\":\"String\",\"nazev_2007\":\"String\",\"nazev_2015\":\"String\",\"x\":\"Number\",\"y\":\"Number\",\"zmena\":\"String\",\"znacka_1999\":\"String\",\"znacka_2007\":\"String\",\"znacka_2015\":\"String\"}}]}",
+    "name": "lekarny",
+    "center": "15.4688,49.6605,6",
+    "minzoom": "6",
+    "maxzoom": "13"
+}
