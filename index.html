@@ -9,9 +9,46 @@
     <script src="https://samizdat.cz/tools/leaflet/0.7.3.js"></script>
     <script src="https://samizdat.cz/tools/d3/3.5.3.js"></script>
     <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-        #tooltip { background-color: yellow; position:absolute; top:30px; right: 30px; width:230px; height: 200px}
+        body { 
+            margin:0;
+            padding:0; 
+         }
+        #map { 
+            position:absolute; 
+            top:0; 
+            bottom:0; 
+            width:100%;
+        }
+        #tooltip { 
+            background: white; 
+            position:absolute; 
+            top:30px; 
+            right: 30px; 
+            width:280px; 
+            height: 215px;
+            padding: 5px;
+            font-family: Helvetica, Arial, Sans-Serif; 
+            font-size: 12px;
+            border: 1px solid #aaa;
+            -webkit-border-radius: 4px;
+                    border-radius: 4px;
+        }
+        .selector { 
+            font-family: Helvetica, Arial, Sans-Serif; 
+            font-size: 12px;
+        }
+        .info {
+            position:absolute; 
+            top:35px; 
+            right: 0px; 
+            width:280px; 
+            height: 60px;}
+        .legend {
+            position:absolute; 
+            top: 95px; 
+            right: 0px; 
+            width:280px; 
+            height: 130px;}
     </style>
 </head>
 <body>
@@ -29,6 +66,7 @@
     </select>
     
     <div class='info'>
+    Najetím myši vyberte lékárnu.
     </div>
     <div class='legend'></div>
 </div>

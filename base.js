@@ -101,9 +101,9 @@ var timeBack = function(zmena, n07, n99) {
   if (zmena == "n") {
     return "";
   } else if (n07 != null) {
-    return "Původní název " + n07;
+    return "<b>Původní název:</b> " + n07;
   } else if (n99 != null) {
-    return "Původní název " + n99;
+    return "<b>Původní název:</b> " + n99;
   } else {
     return "Lékárna v minulosti změnila vlastníka, název neznáme.";
   }
@@ -111,12 +111,12 @@ var timeBack = function(zmena, n07, n99) {
 
 var drawLegend = function(retezec) {
   $(".legend").empty()
-  var w = 200;
-    var h = 100;
+    var w = 200;
+    var h = 225;
     var svg = d3.select('.legend')
           .append("svg")
           .attr("width", w)
-          .attr("height", h + 25);
+          .attr("height", h);
 
   if (retezec == "any") {
     var nazvy = [];
@@ -124,11 +124,14 @@ var drawLegend = function(retezec) {
         nazvy.push(nazev);
     }
 
+    d3.select("#tooltip")
+      .style("height", "215px")
+
      svg.selectAll("circle")
          .data(nazvy)
          .enter()
          .append("circle")
-          .attr("cx", 15)
+          .attr("cx", 8)
           .attr("cy", function(d, i) {
             return (i * 20) + 15;
           })
@@ -153,6 +156,10 @@ var drawLegend = function(retezec) {
           .attr("fill", "black");
     //lekarny
   } else {
+
+     d3.select("#tooltip")
+      .style("height", "140px")
+
     var cols = ["#d7191c", "#2c7bb6"]
     var dataset = ["Změnila majitele", "Původní majitel"]
     
@@ -160,7 +167,7 @@ var drawLegend = function(retezec) {
          .data(dataset)
          .enter()
          .append("circle")
-          .attr("cx", 15)
+          .attr("cx", 8)
           .attr("cy", function(d, i) {
             return (i * 20) + 15;
           })
@@ -190,8 +197,8 @@ var drawMap = function(retezec) {
 	$("#map").empty()
 	map = new mapboxgl.Map({
 	  container: 'map',
-	  center: [14.46562, 50.05981],
-	  zoom: 6,
+	  center: [15.32601339, 49.7500033],
+	  zoom: 6.5,
 	  style: style(retezec)
 	});
 
@@ -203,8 +210,10 @@ var drawMap = function(retezec) {
 	        if (err) throw err;
 	        $(".info").empty()
           if (features[0]) {
-            $(".info").append("<b>" + features[0].properties.nazev_2015 + "</b><br>Adresa: <b>" + features[0].properties.adresa + "</b><br>" + timeBack(features[0].properties.zmena, features[0].properties.nazev_2007, features[0].properties.nazev_1999))
-          }
+            $(".info").append("<b>" + features[0].properties.nazev_2015 + "<br>Adresa: </b>" + features[0].properties.adresa + "<br>" + timeBack(features[0].properties.zmena, features[0].properties.nazev_2007, features[0].properties.nazev_1999))
+          } else {
+            $(".info").append("Najetím myši vyberte lékárnu.");
+          };
 	    });
 	});
 };
